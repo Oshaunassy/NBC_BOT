@@ -14,14 +14,12 @@ async def python_answers(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Cool you are awesome python developer",
-        reply_markup=await inline_buttons.questionnaire_first_answers()
     )
 
 async def mojo_answers(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
         text="don't lie. Mojo is in alpha version.",
-        reply_markup=await inline_buttons.questionnaire_first_answers()
     )
 
 def register_questionnaire_handlers(dp:Dispatcher):

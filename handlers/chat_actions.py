@@ -29,28 +29,28 @@ async def chat_message(message: types.message):
                     # )
                 # return
 
-            datab.sql_update_ban_count(
-                tg_id=message.from_user.id
-            )
-            await bot.send_message(
-                chat_id=message.chat.id,
-                text=BAN_USER_TEXT.format(
-                    name=message.from_user.first_name,
-                    count=potential['count'] + 1
+                datab.sql_update_ban_count(
+                    tg_id=message.from_user.id
                 )
-            )
-        elif not potential:
-            datab.sql_insert_ban_user(
-                tg_id=message.from_user.id
-            )
-            await bot.send_message(
-                chat_id=message.chat.id,
-                text=BAN_USER_TEXT.format(
-                    name=message.from_user.first_name,
-                    count=1
+                await bot.send_message(
+                    chat_id=message.chat.id,
+                    text=BAN_USER_TEXT.format(
+                        name=message.from_user.first_name,
+                        count=potential['count'] + 1
+                    )
                 )
-            )
-        await message.delete()
+            elif not potential:
+                datab.sql_insert_ban_user(
+                    tg_id=message.from_user.id
+                )
+                await bot.send_message(
+                    chat_id=message.chat.id,
+                    text=BAN_USER_TEXT.format(
+                        name=message.from_user.first_name,
+                        count=1
+                    )
+                )
+            await message.delete()
 
 def register_chat_actions_handlers(dp:Dispatcher):
     dp.register_message_handler(chat_message)

@@ -19,12 +19,12 @@ async def nbc_start_button(message: types.Message):
     # except sqlite3.IntegrityError:
     #     pass
     print(message)
-    await bot.send_message(
-        chat_id=message.from_user.id,
-        text=f"Hello, {message.from_user.first_name}",
-        reply_markup=await inline_buttons.nbc_start_keyboard()
-    )
-    with open(MEDIA_DESTINATION + "bot_pic.png") as photo:
+    # await bot.send_message(
+    #     chat_id=message.from_user.id,
+    #     text=f"Hello, {message.from_user.first_name}",
+    #     reply_markup=await inline_buttons.nbc_start_keyboard()
+    # )
+    with open(MEDIA_DESTINATION + "bot_pic.png", 'rb') as photo:
         await bot.send_photo(
             chat_id=message.from_user.id,
             photo=photo,
@@ -33,16 +33,16 @@ async def nbc_start_button(message: types.Message):
             ),
             reply_markup=await inline_buttons.nbc_start_keyboard()
         )
-
-    with open(MEDIA_DESTINATION + "bot_ani.gif") as animation:
-        await bot.send_animation(
-            chat_id=message.from_user.id,
-            animation=animation,
-            caption=START_MENU.format(
-                name=message.from_user.first_name
-            ),
-            reply_markup=await inline_buttons.nbc_start_keyboard()
-        )
+    #
+    # with open(MEDIA_DESTINATION + "bot_ani.gif") as animation:
+    #     await bot.send_animation(
+    #         chat_id=message.from_user.id,
+    #         animation=animation,
+    #         caption=START_MENU.format(
+    #             name=message.from_user.first_name
+    #         ),
+    #         reply_markup=await inline_buttons.nbc_start_keyboard()
+    #     )
 
 
 def register_nbc_start_handlers(dp: Dispatcher):
