@@ -69,3 +69,4 @@ async def my_profile_keyboard():
     markup.add(like_button)
     markup.add(dislike_button)
     return markup
+

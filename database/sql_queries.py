@@ -86,3 +86,8 @@ AND like_system.LIKER_TELERGAM_ID = ?
 WHERE like_system.ID IS NULL
 AND profile.TELEGRSM_ID != ?
 '''
+
+INSERT_CHECK_BAN_USER_QUERY = """
+INSERT INTO ban_user VALUES (?, ?, ?, ?)
+
+"""

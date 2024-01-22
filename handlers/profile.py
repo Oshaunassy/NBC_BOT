@@ -69,7 +69,7 @@ async def detect_like_profiles_call(call: types.CallbackQuery):
             liker=call.from_user.id,
         )
     except sqlite3.IntegrityError:
-        await  bot.send_message(
+        await bot.send_message(
             chat_id=call.from_user.id,
             text="you've liked this profile!"
         )

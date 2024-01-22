@@ -12,4 +12,4 @@ BAN_USER_TEXT = "User: {name}\n" \
 
 PROFILE_TEXT = "Nickname: {nickname}\n" \
                "Bio: {bio}\n" \
-               "Age: {age}\n" \
+               "Age: {age}\n"
