@@ -46,10 +46,10 @@ class Database:
         )
         self.connection.commit()
 
-    def sql_insert_profile(self, tg_id, nickname, bio, age, sign, photo):
+    def sql_insert_profile(self, tg_id, nickname, bio, age, sign, favorite_actor, favorite_genre, photo):
         self.cursor.execute(
             sql_queries.INSERT_PRIFILE_QUERY
-            (None, tg_id, nickname, bio, age, sign, photo)
+            (None, tg_id, nickname, bio, age, sign, favorite_actor, favorite_genre, photo)
         )
         self.connection.commit()
 
@@ -61,7 +61,9 @@ class Database:
             'bio': row[3],
             'age': row[4],
             'sign': row[5],
-            'photo': row[6],
+            'favorite_actor': row[6],
+            'favorite_genre': row[7],
+            'photo': row[8],
         }
         return self.cursor.execute(
             sql_queries.SELECT_PROFILE_QUERY,
@@ -83,7 +85,9 @@ class Database:
             'bio': row[3],
             'age': row[4],
             'sign': row[5],
-            'photo': row[6],
+            'favorite_actor': row[6],
+            'favorite_genre': row[7],
+            'photo': row[8],
         }
         return self.cursor.execute(
             sql_queries.FILTER_LEFT_JOIN_PROFILE_QUERY,

@@ -14,6 +14,8 @@ class RegistrationStates(StatesGroup):
     biography = State()
     age = State()
     zodiac_sign = State()
+    favorite_actor = State()
+    favorite_genre = State()
     photo = State()
 
 async def registration_start(call: types.CallbackQuery):
@@ -31,7 +33,7 @@ async def load_nickname(message:types.Message,
 
     await bot.send_message(
         chat_id=message.from_user.id,
-        text="send me your name"
+        text="send me your bio"
     )
     await RegistrationStates.next()
 
@@ -42,7 +44,8 @@ async def load_biography(message:types.Message,
         print(data)
 
     await bot.send_message(
-        chat_id="how old are you?\n"
+        chat_id=message.from_user.id,
+        text="how old are you?\n"
                 "(Only numeric age in text)\n"
                 "example: 25, 30"
     )
@@ -51,13 +54,13 @@ async def load_biography(message:types.Message,
 async def load_age(message: types.Message,
                    state: FSMContext):
     try:
-        types(int(message.text))
+        type(int(message.text))
     except ValueError:
-        await  bot.send_message(
+        await bot.send_message(
             chat_id=message.from_user.id,
             text="I told you send me Only numeric text\n"
                  "registration failed\n"
-                 "Rastart registration!!!"
+                 "Restart registration!!!"
         )
         await state.finish()
         return
@@ -81,8 +84,32 @@ async def load_zodiac_sign(message: types.Message,
 
     await bot.send_message(
         chat_id=message.from_user.id,
+        text="send me your favorite actor"
+    )
+    await RegistrationStates.next()
+
+async def load_favorite_actor(message: types.Message,
+                           state: FSMContext):
+    async with state.proxy() as data:
+        data['favorite_actor'] = message.text
+        print(data)
+
+    await bot.send_message(
+        chat_id=message.from_user.id,
+        text="send me your favorite genre"
+    )
+    await RegistrationStates.next()
+
+async def load_favorite_genre(message: types.Message,
+                           state: FSMContext):
+    async with state.proxy() as data:
+        data['favorite_genre'] = message.text
+        print(data)
+
+    await bot.send_message(
+        chat_id=message.from_user.id,
         text="send me your photo\n"
-             "(only in photo mode sender"
+             "(only in photo mode sender)"
     )
     await RegistrationStates.next()
 
@@ -100,6 +127,8 @@ async def load_photo(message: types.Message,
             bio=data['bio'],
             age=data['age'],
             sign=data['sign'],
+            favorite_actor=data['favorite_actor'],
+            favorite_genre=data['favorite_genre'],
             photo=path.name,
         )
 
@@ -112,6 +141,8 @@ async def load_photo(message: types.Message,
                     bio=data['bio'],
                     age=data['age'],
                     sign=data['sign'],
+                    favorite_actor=data['favorite_actor'],
+                    favorite_genre=data['favorite_genre'],
                 ),
             )
         await bot.send_message(
@@ -143,6 +174,16 @@ def register_registration_handlers(dp:Dispatcher):
     dp.register_message_handler(
         load_zodiac_sign,
         state=RegistrationStates.zodiac_sign,
+        content_types=['text']
+    )
+    dp.register_message_handler(
+        load_favorite_actor,
+        state=RegistrationStates.favorite_actor,
+        content_types=['text']
+    )
+    dp.register_message_handler(
+        load_favorite_genre,
+        state=RegistrationStates.favorite_genre,
         content_types=['text']
     )
     dp.register_message_handler(
