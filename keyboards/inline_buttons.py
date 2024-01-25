@@ -15,7 +15,7 @@ async def nbc_start_keyboard():
     )
     my_profile_button = InlineKeyboardButton(
         "Profile",
-        callback_data="view_profile"
+        callback_data="my_profile"
     )
     view_profile_button = InlineKeyboardButton(
         "View Profiles",
