@@ -35,31 +35,31 @@ async def my_profile_call(call: types.CallbackQuery):
             text="you didn't registered,"
                 "please register to view your profile"
         )
-    async def random_filter_profile_call(call: types.CallbackQuery):
-        datab = Database()
-        profile = datab.sql_select_all_profiles(owner=call.from_user.id)
-        if not profile:
-            await bot.send_message(
-                chat_id=call.from_user.id,
-                text="you've liked all profiles, come back later"
+async def random_filter_profile_call(call: types.CallbackQuery):
+    datab = Database()
+    profile = datab.sql_select_all_profiles(owner=call.from_user.id)
+    if not profile:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="you've liked all profiles, come back later"
             )
-            return
+        return
 
-        random_profile = random.choice(profiles)
-        with open(random_profile["photo"], 'rb') as photo:
-            await bot.send_photo(
-                chat_id=call.from_user.id,
-                photo=photo,
-                caption=PROFILE_TEXT.format(
-                    nickname=random_profile['nickname'],
-                    bio=random_profile['bio'],
-                    age=random_profile['age'],
-                    sign=random_profile['sign'],
-                    favorite_actor=profile['favorite_actor'],
-                    favorite_genre=profile['favorite_genre'],
+    random_profile = random.choice(profiles)
+    with open(random_profile["photo"], 'rb') as photo:
+        await bot.send_photo(
+            chat_id=call.from_user.id,
+            photo=photo,
+            caption=PROFILE_TEXT.format(
+                nickname=random_profile['nickname'],
+                bio=random_profile['bio'],
+                age=random_profile['age'],
+                sign=random_profile['sign'],
+                favorite_actor=profile['favorite_actor'],
+                favorite_genre=profile['favorite_genre'],
                 ),
-                reply_markup=await inline_buttons.like_dislike_keyboard(
-                    owner=random_profile['telegram_id'])
+            reply_markup=await inline_buttons.like_dislike_keyboard(
+                owner=random_profile['telegram_id'])
             )
 
 async def detect_like_profiles_call(call: types.CallbackQuery):
@@ -81,18 +81,37 @@ async def detect_like_profiles_call(call: types.CallbackQuery):
         await call.message.delete()
         await random_filter_profile_call(call=call)
 
+async def detect_dislikee_profiles_call(call: types.CallbackQuery):
+    datab = Database()
+    owner = re.sub('likee_', "", call.data)
+    print(call.data)
+    print(owner)
+    try:
+        datab.sql_insert_dislikee(
+            owner=owner,
+            disliker=call.from_user.id,
+        )
+    except sqlite3.IntegrityError:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="you've disliked this profile!"
+        )
+    finally:
+        await call.message.delete()
+        await random_filter_profile_call(call=call)
 
-    def register_profile_handlers(dp:Dispatcher):
-        dp.register_callback_query_handler(
-            my_profile_call,
-            lambda call: call.data == "my_profile"
-        )
-        dp.register_callback_query_handler(
-            random_filter_profile_call,
-            lambda call: call.data == "view_profiles"
-        )
-        dp.register_callback_query_handler(
-            detect_like_profiles_call,
-            lambda call: "like_" in call.data
-        )
+
+def register_profile_handlers(dp:Dispatcher):
+    dp.register_callback_query_handler(
+        my_profile_call,
+        lambda call: call.data == "my_profile"
+    )
+    dp.register_callback_query_handler(
+        random_filter_profile_call,
+        lambda call: call.data == "view_profiles"
+    )
+    dp.register_callback_query_handler(
+        detect_like_profiles_call,
+        lambda call: "like_" in call.data
+    )
 

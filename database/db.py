@@ -48,7 +48,7 @@ class Database:
 
     def sql_insert_profile(self, tg_id, nickname, bio, age, sign, favorite_actor, favorite_genre, photo):
         self.cursor.execute(
-            sql_queries.INSERT_PRIFILE_QUERY
+            sql_queries.INSERT_PROFILE_QUERY
             (None, tg_id, nickname, bio, age, sign, favorite_actor, favorite_genre, photo)
         )
         self.connection.commit()
@@ -56,8 +56,8 @@ class Database:
     def sql_select_profile(self, tg_id):
         self.cursor.row_factory = lambda cursor, row:{
             'id': row[0],
-            'telegrsm_id': row[1],
-            'nackname': row[2],
+            'telegram_id': row[1],
+            'nickname': row[2],
             'bio': row[3],
             'age': row[4],
             'sign': row[5],
@@ -77,11 +77,18 @@ class Database:
         )
         self.connection.commit()
 
+    def sql_insert_dislikee(self, owner, disliker):
+        self.cursor.execute(
+            sql_queries.INSERT_DISLIKEE_QUERY,
+            (None, owner, disliker,)
+        )
+        self.connection.commit()
+
     def sql_select_all_profiles(self, owner):
         self.cursor.row_factory = lambda cursor, row: {
             'id': row[0],
-            'telegrsm_id': row[1],
-            'nackname': row[2],
+            'telegram_id': row[1],
+            'nickname': row[2],
             'bio': row[3],
             'age': row[4],
             'sign': row[5],

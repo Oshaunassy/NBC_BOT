@@ -48,12 +48,12 @@ async def like_dislike_keyboard(owner):
         "Like",
         callback_data=f"like_{owner}"
     )
-    dilike_button = InlineKeyboardButton(
+    dislike_button = InlineKeyboardButton(
         "Dislike",
         callback_data="view_profile"
     )
     markup.add(like_button)
-    markup.add(dilike_button)
+    markup.add(dislike_button)
     return markup
 
 async def my_profile_keyboard():
