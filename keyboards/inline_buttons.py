@@ -15,16 +15,25 @@ async def nbc_start_keyboard():
     )
     my_profile_button = InlineKeyboardButton(
         "Profile",
-        callback_data="view_profile"
+        callback_data="my_profile"
     )
     view_profile_button = InlineKeyboardButton(
         "View Profiles",
         callback_data="view_profile"
     )
+    reference_button = InlineKeyboardButton(
+        "Referral Menu",
+        callback_data="reference_menu"
+    )
+    reference_button = InlineKeyboardButton(
+        "Referral Menu",
+        callback_data="reference_menu"
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(view_profile_button)
+    markup.add(reference_button)
     return markup
 
 async def questionnaire_first_answers():
@@ -68,5 +77,19 @@ async def my_profile_keyboard():
     )
     markup.add(like_button)
     markup.add(dislike_button)
+    return markup
+
+async def referral_keyboard():
+    markup = InlineKeyboardMarkup()
+    generate_button = InlineKeyboardButton(
+        "Generate Link",
+        callback_data='generate_link'
+    )
+    my_referrals_button = InlineKeyboardButton(
+        "My Referrals",
+        callback_data='my_referrals'
+    )
+    markup.add(generate_button)
+    markup.add(my_referrals_button)
     return markup
 

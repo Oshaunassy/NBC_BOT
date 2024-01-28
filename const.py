@@ -13,3 +13,11 @@ BAN_USER_TEXT = "User: {name}\n" \
 PROFILE_TEXT = "Nickname: {nickname}\n" \
                "Bio: {bio}\n" \
                "Age: {age}\n"
+
+REFERENCE_MENU_TEXT = "Welcome to the referral menu, {users}\n" \
+               "you can earn money by sharing\n" \
+               "link to invite other people (friends ext)\n" \
+                      "you can press the button to generate link]n" \
+                      "Balance: {balance}\n" \
+                      "total referrals: {total}"
+
