@@ -57,7 +57,7 @@ class Database:
     def sql_update_ban_count(self, tg_id):
         self.cursor.execute(
         sql_queries.UPDATE_BAN_USER_COUNT_QUERY,
-        (None, tg_id, 1,)
+        (None, tg_id,)
         )
         self.connection.commit()
 
@@ -171,7 +171,7 @@ class Database:
     def sql_update_link(self, link, tg_id):
         self.cursor.execute(
         sql_queries.UPDATE_USER_LINK_QUERY,
-        (None, link, tg_id,)
+        (link, tg_id,)
         )
         self.connection.commit()
 
