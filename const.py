@@ -12,7 +12,11 @@ BAN_USER_TEXT = "User: {name}\n" \
 
 PROFILE_TEXT = "Nickname: {nickname}\n" \
                "Bio: {bio}\n" \
-               "Age: {age}\n"
+               "Age: {age}\n" \
+               "sign: {sign}\n" \
+               "favorite_actor: {favorite_actor}\n" \
+               "favorite_genre: {favorite_genre}\n" \
+               "photo: {photo}"
 
 REFERENCE_MENU_TEXT = "Welcome to the referral menu, {users}\n" \
                "you can earn money by sharing\n" \

@@ -70,7 +70,16 @@ async def nbc_start_button(message: types.Message):
     #         reply_markup=await inline_buttons.nbc_start_keyboard()
     #     )
 
+async def latest_news_call(call:types.CallbackQuery):
+    scraper = AzattykCsraper()
+    data = scraper.parse_data()
 
+    for link in data[:4]:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text=scraper.START_URL + link
+        )
 
 def register_nbc_start_handlers(dp: Dispatcher):
     dp.register_message_handler(nbc_start_button, commands=['start'])
+    dp.register_message_handler(latest_news_call, lambda call:call.data == ['latest_news'])

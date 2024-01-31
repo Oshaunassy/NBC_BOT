@@ -45,7 +45,7 @@ async def random_filter_profile_call(call: types.CallbackQuery):
             )
         return
 
-    random_profile = random.choice(profiles)
+    random_profile = random.choice(profile)
     with open(random_profile["photo"], 'rb') as photo:
         await bot.send_photo(
             chat_id=call.from_user.id,
@@ -55,8 +55,8 @@ async def random_filter_profile_call(call: types.CallbackQuery):
                 bio=random_profile['bio'],
                 age=random_profile['age'],
                 sign=random_profile['sign'],
-                favorite_actor=profile['favorite_actor'],
-                favorite_genre=profile['favorite_genre'],
+                favorite_actor=random_profile['favorite_actor'],
+                favorite_genre=random_profile['favorite_genre'],
                 ),
             reply_markup=await inline_buttons.like_dislike_keyboard(
                 owner=random_profile['telegram_id'])
@@ -108,7 +108,7 @@ def register_profile_handlers(dp:Dispatcher):
     )
     dp.register_callback_query_handler(
         random_filter_profile_call,
-        lambda call: call.data == "view_profiles"
+        lambda call: call.data == "view_profile"
     )
     dp.register_callback_query_handler(
         detect_like_profiles_call,

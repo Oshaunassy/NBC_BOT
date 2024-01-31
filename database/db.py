@@ -125,7 +125,7 @@ class Database:
         }
         return self.cursor.execute(
             sql_queries.FILTER_LEFT_JOIN_PROFILE_QUERY,
-            (owner, owner)
+            (owner, owner,)
         ).fetchall()
 
     def sql_select_referral_menu_info(self, owner):

@@ -25,15 +25,16 @@ async def nbc_start_keyboard():
         "Referral Menu",
         callback_data="reference_menu"
     )
-    reference_button = InlineKeyboardButton(
-        "Referral Menu",
-        callback_data="reference_menu"
+    latest_news_button = InlineKeyboardButton(
+        "Latest News",
+        callback_data="latest_news"
     )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(view_profile_button)
     markup.add(reference_button)
+    markup.add(latest_news_button)
     return markup
 
 async def questionnaire_first_answers():
