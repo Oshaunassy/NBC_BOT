@@ -71,7 +71,7 @@ async def nbc_start_button(message: types.Message):
     #     )
 
 async def latest_news_call(call:types.CallbackQuery):
-    scraper = AzattykCsraper()
+    scraper = ()
     data = scraper.parse_data()
 
     for link in data[:4]:

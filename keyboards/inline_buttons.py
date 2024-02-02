@@ -29,12 +29,17 @@ async def nbc_start_keyboard():
         "Latest News",
         callback_data="latest_news"
     )
+    film_button = InlineKeyboardButton(
+        text="Films",
+        callback_data='choose_the_film'
+    )
     markup.add(questionnaire_button)
     markup.add(registration_button)
     markup.add(my_profile_button)
     markup.add(view_profile_button)
     markup.add(reference_button)
     markup.add(latest_news_button)
+    markup.add(film_button)
     return markup
 
 async def questionnaire_first_answers():
@@ -94,3 +99,12 @@ async def referral_keyboard():
     markup.add(my_referrals_button)
     return markup
 
+# async def film_button():
+#     markup = InlineKeyboardMarkup()
+#     film_button = InlineKeyboardButton(
+#         text="Films",
+#         callback_data='choose_the_film'
+#     )
+#
+#     markup.add(film_button)
+#     return markup

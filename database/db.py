@@ -1,5 +1,6 @@
 import sqlite3
 from database import sql_queries
+
 class Database:
     def __init__(self):
         self.connection = sqlite3.connect("db.sqlite3")
@@ -13,6 +14,7 @@ class Database:
         self.connection.execute(sql_queries.CREATE_PROFILE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
         self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
+
 
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
@@ -181,3 +183,19 @@ class Database:
         (owner,)
         )
         self.connection.commit()
+
+    def sql_insert_film(self, url):
+        self.cursor.execute(
+            sql_queries.INSERT_FILM_QUERY,
+            (None, url)
+        )
+        self.connection.commit()
+
+    def sql_select_film(self):
+        self.cursor.row_factory = lambda cursor, row: {
+            'id': row[0],
+            'url': row[1],
+        }
+        return self.cursor.execute(
+            sql_queries.SELECT_FILM_QUERY
+        ).fetchall()
