@@ -99,12 +99,12 @@ async def referral_keyboard():
     markup.add(my_referrals_button)
     return markup
 
-# async def film_button():
-#     markup = InlineKeyboardMarkup()
-#     film_button = InlineKeyboardButton(
-#         text="Films",
-#         callback_data='choose_the_film'
-#     )
-#
-#     markup.add(film_button)
-#     return markup
+async def film_button():
+    markup = InlineKeyboardMarkup()
+    film_button = InlineKeyboardButton(
+        text="Films",
+        callback_data='choose_the_film'
+    )
+
+    markup.add(film_button)
+    return markup

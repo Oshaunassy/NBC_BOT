@@ -11,24 +11,32 @@ class RezkaScraper:
         'Accept-Encoding': 'gzip, deflate, br'
     }
 
-    response = requests.request("GET", URL, headers=HEADERS)
-    print(response.text)
+    def __init__(self):
+        self.response = requests.get(self.URL, headers=self.HEADERS).text
+    # print(response.text)
 
     LINK_XPATH = '//div[@class="b-content__inline_item"]'
+    IMAGE_XPATH = '//div[@class="b-content__inline_item-cover"]/a[@href="https://rezka.ag/films/melodrama/61645-velikaya-ironiya-2023.html"]/img'
 
     def parse_data(self):
         response = requests.get(self.URL, headers=self.HEADERS).text
         tree = Selector(text=response)
-        items = tree.xpath(self.LINK_XPATH)
+        items = tree.xpath(self.LINK_XPATH).getall()
+        images = tree.xpath(self.IMAGE_XPATH).getall()
         url = []
         for item in items:
-            film_url = item.xpath('.//a[@href]').xpath('./@href').get()
+            if not isinstance(item, Selector):
+                item = Selector(text=item)
+            film_url = item.xpath('.//a[@href]/@href').get()
             url.append(film_url)
-            return url
+
+        for image in images:
+            print(image)
+        # return url
 
 
 
 if __name__ == "__main__":
-    scraper = RezkaScraper()
-    scraper.parse_data()
+    new_scraper: RezkaScraper = RezkaScraper()
+    new_scraper.parse_data()
 
