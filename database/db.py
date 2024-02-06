@@ -9,12 +9,12 @@ class Database:
     def sql_create_tables(self):
         if self.connection:
             print("database connected successfully")
-        self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
-        self.connection.execute(sql_queries.CREATE_BAN_USER_TABLE_QUERY)
-        self.connection.execute(sql_queries.CREATE_PROFILE_TABLE_QUERY)
-        self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
-        self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
-
+            self.connection.execute(sql_queries.CREATE_USER_TABLE_QUERY)
+            self.connection.execute(sql_queries.CREATE_BAN_USER_TABLE_QUERY)
+            self.connection.execute(sql_queries.CREATE_PROFILE_TABLE_QUERY)
+            self.connection.execute(sql_queries.CREATE_LIKE_TABLE_QUERY)
+            self.connection.execute(sql_queries.CREATE_REFERRAL_TABLE_QUERY)
+            self.connection.execute(sql_queries.CREATE_FILM_TABLE_QUERY)
 
         try:
             self.connection.execute(sql_queries.ALTER_USER_TABLE)
@@ -184,10 +184,10 @@ class Database:
         )
         self.connection.commit()
 
-    def sql_insert_film(self, url):
+    def sql_insert_film(self, url, img):
         self.cursor.execute(
             sql_queries.INSERT_FILM_QUERY,
-            (None, url)
+            (None, url, img)
         )
         self.connection.commit()
 
@@ -195,7 +195,13 @@ class Database:
         self.cursor.row_factory = lambda cursor, row: {
             'id': row[0],
             'url': row[1],
+            'image': row[2]
         }
         return self.cursor.execute(
             sql_queries.SELECT_FILM_QUERY
         ).fetchall()
+
+    def drop_film(self):
+        self.cursor.execute(sql_queries.DROP_FILMS_TABLE)
+        self.connection.commit()
+

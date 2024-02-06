@@ -1,5 +1,6 @@
 from aiogram import executor
 from config import dp
+from scraping import async_scraper
 from handlers import (
     start,
     questionnaire,
@@ -8,7 +9,8 @@ from handlers import (
     profile,
     reference,
     errors,
-    scraper
+    scraper,
+    films
 )
 
 from database import db
@@ -25,7 +27,10 @@ registration.register_registration_handlers(dp=dp)
 profile.register_profile_handlers(dp=dp)
 reference.register_reference_handlers(dp=dp)
 scraper.register_parsel_handlers(dp=dp)
+films.register_get_data(dp=dp)
+
 chat_actions.register_chat_actions_handlers(dp=dp)
+
 
 
 if __name__ == "__main__":

@@ -30,8 +30,12 @@ async def nbc_start_keyboard():
         callback_data="latest_news"
     )
     film_button = InlineKeyboardButton(
-        text="Films",
+        "Films",
         callback_data='choose_the_film'
+    )
+    rez_scraping_button = InlineKeyboardButton(
+        "Rez of scraping",
+        callback_data='choose_the_data'
     )
     markup.add(questionnaire_button)
     markup.add(registration_button)
@@ -40,6 +44,7 @@ async def nbc_start_keyboard():
     markup.add(reference_button)
     markup.add(latest_news_button)
     markup.add(film_button)
+    markup.add(rez_scraping_button)
     return markup
 
 async def questionnaire_first_answers():
@@ -106,5 +111,13 @@ async def film_button():
         callback_data='choose_the_film'
     )
 
+async def rez_scraping_button():
+    markup = InlineKeyboardMarkup()
+    rez_scraping_button = InlineKeyboardButton(
+        text="Rez of scraping",
+        callback_data='choose_the_data'
+    )
+
     markup.add(film_button)
+    markup.add(rez_scraping_button)
     return markup
